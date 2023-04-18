@@ -182,6 +182,12 @@ Example:
 - Twitter: [@MAleemHashmi1](https://twitter.com/MAleemHashmi1)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/muhammad-aleem-hashmi-09658a171/)
 
+👤 **Damilare Arikeusola**
+
+- GitHub: [@mrprotocoll](https://github.com/mrprotocoll)
+- Twitter: [@dprotocoll](https://twitter.com/dprotocoll)
+- LinkedIn: [@mrprotocoll](https://www.linkedin.com/in/mrprotocoll)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->
