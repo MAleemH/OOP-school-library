@@ -8,6 +8,7 @@ require './rental'
 require './student'
 require './teacher'
 require './storage/book_storage'
+require './storage/person_storage'
 
 class App
   attr_accessor :people, :books, :rentals
@@ -82,14 +83,7 @@ class App
 
   # store data
   def store_data
-    people = @people.map do |person|
-      if person.class == 'Student'
-        { age: person.age, name: person.name, permission: person.parent_permission, type: person.class }
-      else
-        { name: person.name, age: person.age, specialization: person.specialization, type: person.class }
-      end
-    end
-
+    PersonStorage.save(@people)
     BookStorage.save(@books)
 
     # rentals = @rentals.map do |rental|
@@ -97,26 +91,13 @@ class App
     #     book_author: rental.book.author, person_index: @people.index(rental.person), person_name: rental.person.name }
     # end
 
-    # File.write('./data/people.json', JSON.generate(people))
     # File.write('./data/rentals.json', JSON.generate(rentals))
   end
 
   # load data
   def load_data
-    if File.exist?('./data/people.json')
-      JSON.parse(File.read('./data/people.json')).map do |person_hash|
-        case person_hash['type']
-        when 'Student'
-          newStudent = Student.new(person_hash['age'], person_hash['id'], person_hash['name'], parent_permission: person_hash['parent_permission'])
-          people.push(newStudent)
-        when 'Teacher'
-          newTeacher = Teacher.new(person_hash['age'], person_hash['specialization'], person_hash['name'], person_hash['id'])
-          people.push(newTeacher)
-        end
-      end
-    end
-    
     @books = BookStorage.getBooks
+    @people = PersonStorage.getPeople
 
     # if File.exist?('./data/rentals.json')
     #   JSON.parse(File.read('./data/rentals.json')).map do |rental_hash|
