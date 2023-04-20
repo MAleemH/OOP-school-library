@@ -14,6 +14,7 @@ end
 
 def main
   app = App.new
+  app.load_data
 
   puts "Welcome to School Library App!\n\n"
 
@@ -22,6 +23,9 @@ def main
     option = gets.chomp.to_i
     Options.option(option, app)
   end
+
+  # set up exit handler
+  at_exit { app.exit_handler }
 end
 
 main
