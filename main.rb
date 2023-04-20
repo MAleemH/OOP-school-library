@@ -23,9 +23,6 @@ def main
     option = gets.chomp.to_i
     Options.option(option, app)
   end
-
-  # set up exit handler
-  at_exit { app.exit_handler }
 end
 
 main

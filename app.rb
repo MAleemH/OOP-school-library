@@ -81,37 +81,52 @@ class App
 
   # store data
   def store_data
-    File.write('./data/people.json', JSON.generate(@people.map(&:to_h)))
-    File.write('./data/books.json', JSON.generate(@books.map(&:to_h)))
-    File.write('./data/rentals.json', JSON.generate(@rentals.map(&:to_h)))
+    people = @people.map do |person|
+      if person.instance_of?(::Student)
+        { age: person.age, name: person.name, permission: person.parent_permission, type: person.class }
+      else
+        { name: person.name, age: person.age, specialization: person.specialization, type: person.class }
+      end
+    end
+
+    books = @books.map { |book| { title: book.title, author: book.author } }
+
+    rentals = @rentals.map do |rental|
+      { date: rental.date, book_index: @books.index(rental.book), book_title: rental.book.title,
+        book_author: rental.book.author, person_index: @people.index(rental.person), person_name: rental.person.name }
+    end
+
+    File.write('./data/people.json', JSON.generate(people))
+    File.write('./data/books.json', JSON.generate(books))
+    File.write('./data/rentals.json', JSON.generate(rentals))
   end
 
   # load data
   def load_data
     if File.exist?('./data/people.json')
-      @people = JSON.parse(File.read('./data/people.json')).map do |person_hash|
+      JSON.parse(File.read('./data/people.json')).map do |person_hash|
         case person_hash['type']
         when 'Student'
-          Student.new(person_hash['age'], person_hash['id'], person_hash['name'], parent_permission: person_hash['parent_permission'])
+          newStudent = Student.new(person_hash['age'], person_hash['id'], person_hash['name'], parent_permission: person_hash['parent_permission'])
+          people.push(newStudent)
         when 'Teacher'
-          Teacher.new(person_hash['age'], person_hash['specialization'], person_hash['name'], person_hash['id'])
+          newTeacher = Teacher.new(person_hash['age'], person_hash['specialization'], person_hash['name'], person_hash['id'])
+          people.push(newTeacher)
         end
       end
     end
 
     if File.exist?('./data/books.json')
-      @books = JSON.parse(File.read('./data/books.json')).map do |book_hash|
-        Book.new(book_hash['title'], book_hash['author'])
+      JSON.parse(File.read('./data/books.json')).map do |book_hash|
+        newBook = Book.new(book_hash['title'], book_hash['author'])
+        books.push(newBook)
       end
     end
 
     if File.exist?('./data/rentals.json')
-      @rentals = JSON.parse(File.read('./data/rentals.json')).map do |rental_hash|
-        Rental.new(
-          rental_hash['data'],
-          rental_hash['person'],
-          rental_hash['book']
-        )
+      JSON.parse(File.read('./data/rentals.json')).map do |rental_hash|
+        # newRental = Rental.new(books[rental_hash['book_index']], people[rental_hash['person_index']], rental_hash['date'])
+        rentals.push(rental_hash)
       end
     end
   end

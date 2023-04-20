@@ -1,1 +1,1 @@
-[{"id":2819,"age":24,"name":"Aleem","rentals":[]}]
+[{"age":24,"name":"Aleem","permission":{"parent_permission":{"parent_permission":{"parent_permission":{"parent_permission":{"parent_permission":true}}}}},"type":"Student"}]
