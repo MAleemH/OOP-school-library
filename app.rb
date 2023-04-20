@@ -7,6 +7,7 @@ require './person'
 require './rental'
 require './student'
 require './teacher'
+require './storage/book_storage'
 
 class App
   attr_accessor :people, :books, :rentals
@@ -82,23 +83,22 @@ class App
   # store data
   def store_data
     people = @people.map do |person|
-      if person.instance_of?(::Student)
+      if person.class == 'Student'
         { age: person.age, name: person.name, permission: person.parent_permission, type: person.class }
       else
         { name: person.name, age: person.age, specialization: person.specialization, type: person.class }
       end
     end
 
-    books = @books.map { |book| { title: book.title, author: book.author } }
+    BookStorage.save(@books)
 
-    rentals = @rentals.map do |rental|
-      { date: rental.date, book_index: @books.index(rental.book), book_title: rental.book.title,
-        book_author: rental.book.author, person_index: @people.index(rental.person), person_name: rental.person.name }
-    end
+    # rentals = @rentals.map do |rental|
+    #   { date: rental.date, book_index: @books.index(rental.book), book_title: rental.book.title,
+    #     book_author: rental.book.author, person_index: @people.index(rental.person), person_name: rental.person.name }
+    # end
 
-    File.write('./data/people.json', JSON.generate(people))
-    File.write('./data/books.json', JSON.generate(books))
-    File.write('./data/rentals.json', JSON.generate(rentals))
+    # File.write('./data/people.json', JSON.generate(people))
+    # File.write('./data/rentals.json', JSON.generate(rentals))
   end
 
   # load data
@@ -115,20 +115,15 @@ class App
         end
       end
     end
+    
+    @books = BookStorage.getBooks
 
-    if File.exist?('./data/books.json')
-      JSON.parse(File.read('./data/books.json')).map do |book_hash|
-        newBook = Book.new(book_hash['title'], book_hash['author'])
-        books.push(newBook)
-      end
-    end
-
-    if File.exist?('./data/rentals.json')
-      JSON.parse(File.read('./data/rentals.json')).map do |rental_hash|
-        # newRental = Rental.new(books[rental_hash['book_index']], people[rental_hash['person_index']], rental_hash['date'])
-        rentals.push(rental_hash)
-      end
-    end
+    # if File.exist?('./data/rentals.json')
+    #   JSON.parse(File.read('./data/rentals.json')).map do |rental_hash|
+    #     # newRental = Rental.new(books[rental_hash['book_index']], people[rental_hash['person_index']], rental_hash['date'])
+    #     rentals.push(rental_hash)
+    #   end
+    # end
   end
 
   # exit handler
