@@ -1,11 +1,6 @@
-require 'pry'
-# require 'book_storage'
-# require 'person_storage'
-
 class RentalStorage
   def self.save(rentals)
     all_rentals = rentals.map do |rental|
-      # binding.pry
       { date: rental.date, book_title: rental.book.title,
         book_author: rental.book.author, person_name: rental.person.name, person_id: rental.person.id }
     end
