@@ -140,13 +140,13 @@ To run the project, execute the following command:
   ruby main.rb
 ```
 
-<!-- ### Run tests
+### Run tests
 
 To run tests, run the following command:
 
 ```sh
-  npm test
-``` -->
+  rspec spec
+```
 
 <!-- ### Deployment
 
