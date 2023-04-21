@@ -14,6 +14,7 @@ end
 
 def main
   app = App.new
+  app.load_data
 
   puts "Welcome to School Library App!\n\n"
 

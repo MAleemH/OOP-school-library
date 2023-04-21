@@ -14,6 +14,7 @@ class Options
     when 6
       app.list_rentals
     when 7
+      app.exit_handler
       exit
     else
       puts 'Invalid option, please try correct number!'

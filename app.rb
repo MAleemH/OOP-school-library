@@ -1,3 +1,4 @@
+require 'json'
 require './book'
 require './classroom'
 require './decorator'
@@ -6,6 +7,9 @@ require './person'
 require './rental'
 require './student'
 require './teacher'
+require './storage/book_storage'
+require './storage/person_storage'
+require './storage/rentals_storage'
 
 class App
   attr_accessor :people, :books, :rentals
@@ -76,5 +80,24 @@ class App
     @rentals.each do |rental|
       puts "Date: #{rental.date}, Book: \"#{rental.book.title} by #{rental.book.author}" if rental.person.id == id
     end
+  end
+
+  # store data
+  def store_data
+    PersonStorage.save(@people)
+    BookStorage.save(@books)
+    RentalStorage.save(@rentals)
+  end
+
+  # load data
+  def load_data
+    @books = BookStorage.books
+    @people = PersonStorage.people
+    @rentals = RentalStorage.rentals
+  end
+
+  # exit handler
+  def exit_handler
+    store_data
   end
 end
