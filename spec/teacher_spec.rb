@@ -9,4 +9,9 @@ describe Teacher do
       expect(@teacher).to be_an_instance_of Teacher
     end
   end
+  context '#can_use_services?' do
+    it 'should return true' do
+      expect(@teacher.can_use_services?).to eq true
+    end
+  end
 end

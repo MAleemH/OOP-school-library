@@ -9,4 +9,9 @@ describe Student do
       expect(@student).to be_an_instance_of Student
     end
   end
+  context '#play_hooky' do
+    it 'returns the correct string' do
+      expect(@student.play_hooky).to eq '¯(ツ)/¯'
+    end
+  end
 end
