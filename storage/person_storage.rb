@@ -1,5 +1,3 @@
-require 'pry'
-
 class PersonStorage
   def self.save(people)
     all_people = people.map do |person|
