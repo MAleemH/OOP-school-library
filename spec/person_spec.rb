@@ -30,4 +30,24 @@ describe Person do
       expect(rental.date).to eql @date
     end
   end
+  context '#can_use_services?' do
+    it 'returns true if person is of age' do
+      @person.age = 18
+      expect(@person.can_use_services?).to eql true
+    end
+    it 'returns true if person is not of age but has parent permission' do
+      @person.age = 17
+      expect(@person.can_use_services?).to eql true
+    end
+    it 'returns false if person is not of age and does not have parent permission' do
+      @person.age = 17
+      @person.parent_permission = false
+      expect(@person.can_use_services?).to eql false
+    end
+  end
+  context '#correct_name' do
+    it 'returns the correct name' do
+      expect(@person.correct_name).to eql 'Muhammad Aleem'
+    end
+  end
 end
