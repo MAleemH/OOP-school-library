@@ -4,7 +4,7 @@ class BookStorage
     File.write('./data/books.json', JSON.generate(all_books))
   end
 
-  def self.get_books
+  def self.books
     books = []
     if File.exist?('./data/books.json')
       JSON.parse(File.read('./data/books.json')).map do |book_hash|

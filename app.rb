@@ -91,9 +91,9 @@ class App
 
   # load data
   def load_data
-    @books = BookStorage.get_books
-    @people = PersonStorage.get_people
-    @rentals = RentalStorage.get_rentals
+    @books = BookStorage.books
+    @people = PersonStorage.people
+    @rentals = RentalStorage.rentals
   end
 
   # exit handler

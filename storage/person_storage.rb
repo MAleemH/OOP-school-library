@@ -13,19 +13,19 @@ class PersonStorage
     File.write('./data/people.json', JSON.generate(all_people))
   end
 
-  def self.get_people
+  def self.people
     people = []
     if File.exist?('./data/people.json')
       JSON.parse(File.read('./data/people.json')).map do |person_hash|
         case person_hash['type']
         when 'Student'
-          newStudent = Student.new(person_hash['age'], person_hash['id'], person_hash['name'], person_hash['id'],
-                                   parent_permission: person_hash['parent_permission'])
-          people.push(newStudent)
+          new_student = Student.new(person_hash['age'], person_hash['id'], person_hash['name'], person_hash['id'],
+                                    parent_permission: person_hash['parent_permission'])
+          people.push(new_student)
         when 'Teacher'
-          newTeacher = Teacher.new(person_hash['age'], person_hash['specialization'], person_hash['name'],
-                                   person_hash['id'])
-          people.push(newTeacher)
+          new_teacher = Teacher.new(person_hash['age'], person_hash['specialization'], person_hash['name'],
+                                    person_hash['id'])
+          people.push(new_teacher)
         end
       end
     end
