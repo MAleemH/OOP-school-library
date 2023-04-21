@@ -9,6 +9,7 @@ require './student'
 require './teacher'
 require './storage/book_storage'
 require './storage/person_storage'
+require './storage/rentals_storage'
 
 class App
   attr_accessor :people, :books, :rentals
@@ -85,26 +86,14 @@ class App
   def store_data
     PersonStorage.save(@people)
     BookStorage.save(@books)
-
-    # rentals = @rentals.map do |rental|
-    #   { date: rental.date, book_index: @books.index(rental.book), book_title: rental.book.title,
-    #     book_author: rental.book.author, person_index: @people.index(rental.person), person_name: rental.person.name }
-    # end
-
-    # File.write('./data/rentals.json', JSON.generate(rentals))
+    RentalStorage.save(@rentals)
   end
 
   # load data
   def load_data
-    @books = BookStorage.getBooks
-    @people = PersonStorage.getPeople
-
-    # if File.exist?('./data/rentals.json')
-    #   JSON.parse(File.read('./data/rentals.json')).map do |rental_hash|
-    #     # newRental = Rental.new(books[rental_hash['book_index']], people[rental_hash['person_index']], rental_hash['date'])
-    #     rentals.push(rental_hash)
-    #   end
-    # end
+    @books = BookStorage.get_books
+    @people = PersonStorage.get_people
+    @rentals = RentalStorage.get_rentals
   end
 
   # exit handler
